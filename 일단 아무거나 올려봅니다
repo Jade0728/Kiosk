@@ -1,0 +1,78 @@
+class Course {
+	String name;
+	String type;
+	
+	void showInfo() {
+		System.out.println("===========================");
+		System.out.println("과목이름   :  "+name);
+		System.out.println("학생유형   :  "+type);
+		
+	}
+}
+
+class LetterGradeCourse extends Course {
+	int attendence, midscore, finalscore, homeworkscore ;
+	
+	int getattendence() {
+		return attendence;
+	}
+	int getmidscore() {
+		return midscore;
+	}
+	
+	int getfinalscore() {
+		return finalscore;
+	}
+	
+	int gethomeworkscore() {
+		return homeworkscore;
+	}
+	
+	double gettotalscore() {
+		double totalscore=attendence*0.2 +midscore*0.3 +finalscore*0.3 +homeworkscore*0.2;
+		return totalscore;
+		
+	}
+	String getgrade() {
+		double total= gettotalscore();
+		String grade; 
+		
+		if(total>=90)
+			return "A";
+		else if(total>=80)
+			return "B";
+		else if(total>=70)
+			return "C";
+		else return "F";
+		
+		
+	}
+	
+	void showAll() {
+		showInfo();
+		System.out.println("출 석 : "+ getattendence());
+		System.out.println("중 간 : "+ getmidscore());
+		System.out.println("기 말 : "+ getfinalscore());
+		System.out.println("과 제 : "+ gethomeworkscore());
+		System.out.println("총 점 : "+ gettotalscore());
+		System.out.println("---------------------------");
+		
+	}
+	
+}
+public class CourseTest {
+
+	public static void main(String[] args) {
+		LetterGradeCourse C= new LetterGradeCourse();
+		C.name= "소프트웨어융합창의설계";
+		C.type= "재학생";
+		C.attendence= 100;
+		C.midscore= 100;
+		C.finalscore= 100;
+		C.homeworkscore= 100;
+		C.showAll();
+		System.out.println("총 점 : "+ C.getgrade());
+		System.out.println("===========================");
+	}
+
+}
