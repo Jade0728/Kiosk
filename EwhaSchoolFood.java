@@ -75,7 +75,7 @@ public class EwhaSchoolFood {
 		}
  
         TextArea ta = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
-        ta.setText("   상품명        단가        수량        합계\n\n");
+        ta.setText("   메뉴명        단가        수량        합계\n\n");
         ta.setBackground(Color.white);
         ta.setEditable(false);
         ta.setFont(font1); //Center
