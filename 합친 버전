@@ -1,4 +1,5 @@
 //+ 3열로 만들거나, 3열로 만들기 어려우면 메뉴 2개 더 넣어서 8개로 해도 괜찮을 듯 싶어요ㅎㅎ
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -190,13 +191,14 @@ public class EwhaSchoolFood extends JFrame {
                 }
             });
 
-            // Confirm (ok) button event
+            
             ok[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     show = bt[j].getActionCommand();
-                    ta.append("   " + show + "       " + price[j] + "        " + count[j] + "         " + price[j]*count[j]
+                    ta.append("  " + show + "       " + price[j] + "        " + count[j] + "         " + price[j]*count[j]
                             + "원" + "\n");
+                    
                     ok[j].setEnabled(false); // 주문 후에는 버튼 비활성화
                 }
             });
@@ -232,6 +234,8 @@ public class EwhaSchoolFood extends JFrame {
 	        paymentTable.getColumnModel().getColumn(0).setPreferredWidth(180);
 	        paymentTable.getColumnModel().getColumn(1).setPreferredWidth(180); 
 	        paymentTable.getColumnModel().getColumn(2).setPreferredWidth(180);
+	        paymentTable.setOpaque(true);
+	        paymentTable.setBackground(Color.white);
 	        
 	       //글자 가운데정렬
 	        DefaultTableCellRenderer centeralign= new DefaultTableCellRenderer();
@@ -241,7 +245,9 @@ public class EwhaSchoolFood extends JFrame {
 	        }
 	        
 	        JScrollPane paymentScrollPane = new JScrollPane(paymentTable);
-
+	        paymentScrollPane.setBorder(BorderFactory.createEmptyBorder());
+	        paymentTable.setBorder(BorderFactory.createEmptyBorder()); //테이블 가장 바깥쪽 테두리를 빈값으로 만듦 -> 없어짐	        
+	        
 	        //총 금액, 결제버튼 설정
 	        JLabel paymentTotalLabel = new JLabel("총 금액: "+totalprice()+" 원", SwingConstants.CENTER);
 	        paymentTotalLabel.setOpaque(true);
