@@ -1,4 +1,4 @@
-
+//사진 경로는 C:/EwhaKiosk라서 EwhKiosk로 폴더 하나 만들고 사진 넣어주세요! 너무 지저분하게 업로드됐네요 ㅎㅎ ㅠㅠ
 
 import java.awt.*;
 import java.awt.event.*;
