@@ -1,7 +1,9 @@
-package 키오스크;
+
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -44,17 +46,25 @@ public class EwhaSchoolFood extends JFrame {
 		Label l[] = new Label[menu.length];
 		ImageIcon icon[] = new ImageIcon[menu.length];
  
-		for (int i = 0; i < menu.length; i++) {
+        String imagePath = "C:/EwhaKiosk/";
 
-			bt[i] = new JButton(menu[i]);
-			if (i < 4) {
-				bt[i].setBounds(25 + i * 150, 50, 100, 100);
-			} else {
-				bt[i].setBounds(25 + (i - 4) * 150, 300, 100, 100);
-			}
-			icon[i] = new ImageIcon(i + ".png");
-			bt[i].setIcon(icon[i]); //Menu Button
+        for (int i = 0; i < menu.length; i++) {
 
+            bt[i] = new JButton(menu[i]);
+            if (i < 4) {
+                bt[i].setBounds(25 + i * 150, 50, 100, 100);
+            } else {
+                bt[i].setBounds(25 + (i - 4) * 150, 300, 100, 100);
+            }
+            
+            File imgFile = new File(imagePath + i + ".png");
+            if (imgFile.exists()) {
+                icon[i] = new ImageIcon(imgFile.getAbsolutePath());
+                bt[i].setIcon(icon[i]);
+            } else {
+                // 파일이 존재하지 않는 경우 처리
+                System.out.println("이미지 파일이 존재하지 않습니다: " + imgFile.getAbsolutePath());
+            }
 			numb[i] = new TextField("0"); // 초기값 0으로 설정
 			numb[i].setBackground(Color.white);
 			numb[i].setEditable(false);
@@ -83,7 +93,7 @@ public class EwhaSchoolFood extends JFrame {
 			pNorth.add(ok[i]);
 		}
  
-        TextArea ta = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
+        ta = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
         ta.setText("  메뉴명        단가        수량        합계\n\n");
         ta.setBackground(Color.white);
         ta.setEditable(false);
@@ -274,5 +284,3 @@ public class EwhaSchoolFood extends JFrame {
 	}
 
 }
-
-//업로드하신 코드대로 수정했는데 결제창 error가 뜨네요ㅠㅠ
