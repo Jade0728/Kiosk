@@ -1,4 +1,4 @@
-
+//+ 3열로 만들거나, 3열로 만들기 어려우면 메뉴 2개 더 넣어서 8개로 해도 괜찮을 듯 싶어요ㅎㅎ
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
