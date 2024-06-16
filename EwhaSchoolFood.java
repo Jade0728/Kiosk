@@ -4,12 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 
 public class EwhaSchoolFood extends JFrame {
 	int count = 0;
 	String show = "";
 	private TextField[] numb;
+	TextArea ta;
+	private DefaultTableModel paymentModel;
 	
 	public EwhaSchoolFood() {
         
@@ -173,45 +176,103 @@ public class EwhaSchoolFood extends JFrame {
     } //Exit
 	
 	//결제창
-	public void showPayment() {
-        JFrame payment = new JFrame();
-        payment.setTitle("결제");
-        payment.setLayout(new BorderLayout());
+		public void showPayment() {
+	        JFrame payment = new JFrame();
+	        payment.setTitle("결제");
+	        payment.setLayout(null);
+	        JLabel title= new JLabel("결제목록");
+	        //제목 폰트 크기 키우기
+	        Font current= title.getFont();
+	        Font newfont=new Font(current.getName(), current.getStyle(),35);
+	        title.setFont(newfont);
+	        
+	        //표 만들기
+	        String[] columns = {"상품명", "개수", "가격"};
+	               
+	        //표 관련 설정
+	        paymentModel = new DefaultTableModel(columns, 0);
+	        JTable paymentTable = new JTable(paymentModel);
+	        paymentTable.setRowHeight(40);
+	        paymentTable.getColumnModel().getColumn(0).setPreferredWidth(180);
+	        paymentTable.getColumnModel().getColumn(1).setPreferredWidth(180); 
+	        paymentTable.getColumnModel().getColumn(2).setPreferredWidth(180);
+	        
+	       //글자 가운데정렬
+	        DefaultTableCellRenderer centeralign= new DefaultTableCellRenderer();
+	        centeralign.setHorizontalAlignment(JLabel.CENTER);
+	        for (int i = 0; i < paymentTable.getColumnCount(); i++) {
+	            paymentTable.getColumnModel().getColumn(i).setCellRenderer(centeralign);
+	        }
+	        
+	        JScrollPane paymentScrollPane = new JScrollPane(paymentTable);
 
-        String[] columns = {"상품명", "개수", "가격"};
-        Object[][] data = {
-            {"a", "b", "c"}, {"a", "b", "c"},{"a", "b", "c"},
-            {"a", "b", "c"}, {"a", "b", "c"}, {"a", "b", "c"}
-        };
+	        //총 금액, 결제버튼 설정
+	        JLabel paymentTotalLabel = new JLabel("총 금액: "+totalprice()+" 원", SwingConstants.CENTER);
+	        Font totalcurrentfont= paymentTotalLabel.getFont();
+	        Font totalnewfont=new Font(totalcurrentfont.getName(), totalcurrentfont.getStyle(),25);
+	        paymentTotalLabel.setFont(totalnewfont);
+	 
+	        
+	        JPanel btpanel = new JPanel();
+	        JButton cashButton = new JButton("현금 결제");
+	        JButton cardButton = new JButton("카드 결제");
+	        btpanel.add(cashButton);
+	        btpanel.add(cardButton);
+	        
+	        //위치 설정
+	        title.setLocation(5, 5);
+	        title.setSize(300, 40);
+	        payment.add(title);
+	        paymentScrollPane.setLocation(5, 55);
+	        paymentScrollPane.setSize(580, 305);
+	        payment.add(paymentScrollPane);
+	        paymentTotalLabel.setLocation(140, 420);
+	        paymentTotalLabel.setSize(300, 30); 
+	        payment.add(paymentTotalLabel);
+	        btpanel.setLocation(200, 520);
+	        btpanel.setSize(200,50); 
+	        payment.add(btpanel);
+	        
+	        updatePaymentTable();
+	        
+	        payment.setSize(600,600);
+	        payment.setVisible(true);
+	    }
 
-        
-        DefaultTableModel paymentModel = new DefaultTableModel(columns,7);
-        JTable paymentTable = new JTable(paymentModel);
-        
-        paymentTable.setRowHeight(40);
-        paymentTable.getColumnModel().getColumn(0).setPreferredWidth(200);
-        paymentTable.getColumnModel().getColumn(1).setPreferredWidth(200); 
-        paymentTable.getColumnModel().getColumn(2).setPreferredWidth(200);
-        
-        JScrollPane paymentScrollPane = new JScrollPane(paymentTable);
-
-        JLabel paymentTotalLabel = new JLabel("총 금액: 원", SwingConstants.CENTER);
-        JPanel btpanel = new JPanel();
-        JButton cashButton = new JButton("현금 결제");
-        JButton cardButton = new JButton("카드 결제");
-        btpanel.add(cashButton);
-        btpanel.add(cardButton);
-
-        payment.add(paymentTotalLabel, BorderLayout.NORTH);
-        payment.add(paymentScrollPane, BorderLayout.CENTER);
-        payment.add(btpanel, BorderLayout.SOUTH);
-
-        payment.setSize(600,600);
-        payment.setVisible(true);
-    }
-
+		private void updatePaymentTable() {
+	        String[] lines = ta.getText().split("\n");
+	        for (String line : lines) {
+	            if (!line.trim().isEmpty() && !line.startsWith("  메뉴명")) {
+	                String[] parts = line.trim().split("\\s+");
+	                if (parts.length >= 4) {
+	                    String name = parts[0];
+	                    String price = parts[1];
+	                    String count = parts[2];
+	                    String total = parts[3].replace("원", "");
+	                    paymentModel.addRow(new Object[]{name, count, total});
+	                }
+	            }
+	        }
+	    }
+		public int totalprice() {
+			String[] lines = ta.getText().split("\n");
+			int totalprice=0;
+	        for (String line : lines) {
+	            if (!line.trim().isEmpty() && !line.startsWith("  메뉴명")) {
+	                String[] parts = line.trim().split("\\s+");
+	                if (parts.length >= 4) {
+	                    String total = parts[3].replace("원", "");
+	                    totalprice= Integer.parseInt(total); 
+	                }
+	            }
+	        }
+						
+			return totalprice;
+		}
 	public static void main(String[] args) {
 		new EwhaSchoolFood();
 	}
 
 }
+
+//업로드하신 코드대로 수정했는데 결제창 error가 뜨네요ㅠㅠ
