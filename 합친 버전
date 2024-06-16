@@ -1,5 +1,4 @@
 //+ 3열로 만들거나, 3열로 만들기 어려우면 메뉴 2개 더 넣어서 8개로 해도 괜찮을 듯 싶어요ㅎㅎ
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -19,15 +18,19 @@ public class EwhaSchoolFood extends JFrame {
 	public EwhaSchoolFood() {
         
 		JFrame frame = new JFrame("EWHA 분식점");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(0, 0, 625, 1000);
 		frame.setBackground(new Color(204, 255, 204)); //Frame
+
  
 		Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 17);
-		Font font1 = new Font(Font.MONOSPACED, Font.BOLD, 22); //Font
+		Font font1 = new Font(Font.MONOSPACED, Font.BOLD, 23); //Font
 
 		Label highbar = new Label();//ewha 분식점 label
-		highbar.setText("EWHA 분식점");
+		highbar.setText(" EWHA 분식점 ");
 		highbar.setFont(font1);
+		highbar.setBounds(230,10,170,30);
+		highbar.setBackground(Color.pink);
 		
 		Panel pNorth = new Panel(); //Panel에 label 추가
 		pNorth.setBackground(Color.LIGHT_GRAY);
@@ -54,20 +57,20 @@ public class EwhaSchoolFood extends JFrame {
         	menuname[i]= new JLabel();
         	menuname[i].setText(menu[i]);
         }
-        menuname[0].setBounds(60,30,50,20);  menuname[4].setBounds(60,260,50,20);
-        menuname[1].setBounds(213,30,50,20);  menuname[5].setBounds(213,260,50,20);
-        menuname[2].setBounds(360,30,50,20);
-        menuname[3].setBounds(510,30,50,20);
+        menuname[0].setBounds(60,40,50,20);  menuname[4].setBounds(60,270,50,20);
+        menuname[1].setBounds(213,40,50,20);  menuname[5].setBounds(213,270,50,20);
+        menuname[2].setBounds(360,40,50,20);
+        menuname[3].setBounds(510,40,50,20);
         
 
         for (int i = 0; i < menu.length; i++) {
 
             bt[i] = new JButton(menu[i]);
             if (i < 4) {
-            	bt[i].setBounds(25 + i * 150, 50, 100, 100);
+            	bt[i].setBounds(25 + i * 150, 60, 100, 100);
             } 
             else {
-                bt[i].setBounds(25 + (i - 4) * 150, 280, 100, 100);
+                bt[i].setBounds(25 + (i - 4) * 150, 290, 100, 100);
             }
             
             File imgFile = new File(imagePath + i + ".png");
@@ -216,6 +219,7 @@ public class EwhaSchoolFood extends JFrame {
 	//결제창
 		public void showPayment() {
 	        JFrame payment = new JFrame();
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        payment.setTitle("결제");
 	        payment.setLayout(null);
 	        JLabel title= new JLabel("결제목록");
